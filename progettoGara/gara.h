@@ -2,6 +2,7 @@
 #define GARA_H
 #include "veicolo.h"
 #include <cstdlib>
+#include <ctime>
 
 class Gara {
 	int durata;
@@ -58,13 +59,13 @@ void Gara::controlla(int t) {
 		}
 	}
 	
-	std::cout << "Il veicolo più veloce è " << *veicoli[indice_massimo] << " e ha velocità " << massimo_temporaneo << std::endl;
+	std::cout << "Il veicolo più veloce è " << veicoli[indice_massimo]->getMarca() << " e ha velocità " << massimo_temporaneo << std::endl;
 	
 	
 }
 
 void Gara::partenza() {
-	srand(42);
+	srand(time(0));
 	for(int i=0; i < durata; i++) {
 		for(int j=0; j < numeroIscritti; j++) {
 			
@@ -84,5 +85,31 @@ void Gara::partenza() {
 }
 
 void Gara::stampaClassifica() {
-	std::cout << "Da stampare dopo aver implementato l'ordinamento" << std::endl;
+	Veicolo ** classifica = new Veicolo* [numeroIscritti];
+	Veicolo * temp;
+
+	for(int i=0; i < numeroIscritti; i++){
+		classifica[i]=veicoli[i];
+		//std::cout<<*classifica[i]<<std::endl;
+		//std::cout<<*veicoli[i]<<std::endl;
+	}
+
+	bool flag;
+
+	do{  //ORDINAMENTO
+		flag=0;
+		for(int i=0;i<numeroIscritti-1;i++){
+			if(classifica[i]->getVelocita() < classifica[i+1]->getVelocita()) {
+				temp=classifica[i];
+				classifica[i]=classifica[i+1];
+				classifica[i+1]=temp;
+				flag=1;
+			}
+		}
+	} while (flag!=0);
+
+	for(int i=0;i<numeroIscritti;i++)
+		std::cout << (i+1) << ") " << classifica[i]->getMarca() << std::endl;
+
+	delete [] classifica;
 }
