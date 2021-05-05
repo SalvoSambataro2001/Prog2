@@ -10,6 +10,7 @@ class Gara {
 	int numeroIscritti;
 	void controlla(int t);
 	Veicolo ** veicoli;
+	Veicolo ** classifica;
 	
 	public:
 	
@@ -59,7 +60,7 @@ void Gara::controlla(int t) {
 		}
 	}
 	
-	std::cout << "Il veicolo più veloce è " << veicoli[indice_massimo]->getMarca() << " e ha velocità " << massimo_temporaneo << std::endl;
+	std::cout << "Il veicolo piu' veloce e' " << veicoli[indice_massimo]->getMarca() << " e ha velocita'� " << massimo_temporaneo << std::endl;
 	
 	
 }
@@ -79,13 +80,15 @@ void Gara::partenza() {
 			
 		}
 		this->controlla(i);
+		this->stampaClassifica();
 	}
-	
-	this->stampaClassifica();
 }
 
 void Gara::stampaClassifica() {
-	Veicolo ** classifica = new Veicolo* [numeroIscritti];
+	
+	std::cout<<"Classifica momentanea"<<std::endl;
+	
+	classifica = new Veicolo* [numeroIscritti];
 	Veicolo * temp;
 
 	for(int i=0; i < numeroIscritti; i++){
@@ -112,4 +115,6 @@ void Gara::stampaClassifica() {
 		std::cout << (i+1) << ") " << classifica[i]->getMarca() << std::endl;
 
 	delete [] classifica;
+	
+	std::cout<<std::endl<< "-------------------------------"<<std::endl;
 }
